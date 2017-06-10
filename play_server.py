@@ -1,4 +1,7 @@
 
+
+blocked = ["https://www.youtube.com/watch?v=DLzxrzFCyOs&feature=youtu.be", "https://www.youtube.com/watch?v=DLzxrzFCyOs", "https://www.youtube.com/watch?v=dQw4w9WgXcQ"]
+
 import subprocess
 
 from socketIO_client import SocketIO, LoggingNamespace
@@ -48,11 +51,12 @@ def on_chat_message(*args):
         if len(splitMessage) != 2:
             return
 
-        if message[0:11] == "youtube.com" or message[0:14] == "www.youtube.com" or message[0:23] == "https://www.youtube.com" or message[0:16] == "https://youtu.be":
+        if message[0:12] == "youtube.com/" or message[0:15] == "www.youtube.com/" or message[0:24] == "https://www.youtube.com/" or message[0:17] == "https://youtu.be/" or message[0:23] == "https://soundcloud.com/":
                 url = message
-                print "url", url
-                subprocess.call(["Taskkill", "/IM", "firefox.exe", "/F"])
-                subprocess.Popen(["C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe", url])
+                if url not in blocked:
+                    print "url", url
+                    subprocess.call(["Taskkill", "/IM", "firefox.exe", "/F"])
+                    subprocess.Popen(["C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe", url])
             
         print 'received chat', fullMessage
 
